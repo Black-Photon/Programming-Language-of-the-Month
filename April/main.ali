@@ -12,14 +12,16 @@ RV NO_DEFAULT_INITIALIZATION
 RV NO_DYNAMIC_SIZED_OBJECTS
 RV SPARK_05
 
-U main%b		main.adb		f8a721d8 NE OO SU
+U main%b		main.adb		4a62a471 NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 W ada.numerics%s	a-numeri.ads		a-numeri.ali
 W ada.numerics.float_random%s  a-nuflra.adb	a-nuflra.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
+W get_rod_absorption%s	get_rod_absorption.adb	get_rod_absorption.ali
 Z system.concat_5%s	s-conca5.adb		s-conca5.ali
 Z system.img_dec%s	s-imgdec.adb		s-imgdec.ali
+W types%s		types.ads		types.ali
 
 D ada.ads		20200413210136 76789da1 ada%s
 D a-calend.ads		20200413210136 b288ede8 ada.calendar%s
@@ -32,9 +34,10 @@ D a-stream.ads		20200413210136 119b8fb3 ada.streams%s
 D a-tags.ads		20200413210136 491b781d ada.tags%s
 D a-textio.ads		20200413210134 881db35a ada.text_io%s
 D a-unccon.ads		20200413210136 0e9b276f ada.unchecked_conversion%s
+D get_rod_absorption.ads  20200427131112 2c2b241f get_rod_absorption%s
 D interfac.ads		20200413210136 5ab55268 interfaces%s
 D i-cstrea.ads		20200413210136 e53d8b8e interfaces.c_streams%s
-D main.adb		20200413223210 30ec39f8 main%b
+D main.adb		20200427132906 5dcc6edf main%b
 D system.ads		20200413210136 32a08138 system%s
 D s-conca5.ads		20200413210136 875e432e system.concat_5%s
 D s-crtl.ads		20200413210136 0ebbdb71 system.crtl%s
@@ -51,25 +54,35 @@ D s-stoele.ads		20200413210136 2dc34a04 system.storage_elements%s
 D s-traent.ads		20200413210136 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20200413210136 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20200413210136 1b7d22d2 system.wch_con%s
+D types.ads		20200427130546 f3cef691 types%s
 X 1 ada.ads
-16K9*Ada 20e8 14|1r6 2r6 2r37 27r9 30r13 31r13 34r13
+16K9*Ada 20e8 15|1r6 2r6 2r37 42r9 45r13 46r13 49r13
 X 6 a-numeri.ads
-16K13*Numerics 32e17 14|2r10 2r41
+16K13*Numerics 32e17 15|2r10 2r41
 X 7 a-nuflra.ads
-41K22*Float_Random 74e30 14|2w19 2r50
-47R9*Generator<22|63R9> 14|7r9
+41K22*Float_Random 74e30 15|2w19 2r50
+47R9*Generator<23|63R9> 15|8r9
 49F12*Uniformly_Distributed{float}
-51V13*Random{49F12}<22|71p13> 14|13s19
-53U14*Reset<22|100p14> 14|11s5
+51V13*Random{49F12}<23|71p13> 15|24s19
+53U14*Reset<23|100p14> 15|18s5
 X 10 a-textio.ads
-49K13*Text_IO 471e16 14|1w10 27r13 30r17 31r17 34r17
-263U14*Put_Line 14|27s21 30s25 31s25 34s25
-X 14 main.adb
-4U11*Main 4b11 37l5 37t9
-5D10 Kilojoule 8r19 9r14 27r43 27r92
-6f5 Choice{float} 13m9 14r12 17r15
-7r5 G{7|47R9} 11r11 13r26
-8d5 Temperature{5D10} 16m13 16r28 19m13 19r28 24r19 25m9 25r24 27r59 29r12
-. 33r15
-9d5 Output{5D10} 24m9 27r108
+49K13*Text_IO 471e16 15|1w10 42r13 45r17 46r17 49r17
+263U14*Put_Line 15|42s21 45s25 46s25 49s25
+X 12 get_rod_absorption.ads
+3V10*get_rod_absorption{float} 15|3w6 39s23
+X 15 main.adb
+6U11*Main 6b11 52l5 52t9
+7f5 Choice{float} 24m9 25r12 28r15
+8r5 G{7|47R9} 18r11 24r26
+11D10 Kilojoule 12r19 13r14 40r38 42r43 42r92
+12d5 Temperature{11D10} 27m13 27r28 30m13 30r28 35r19 36m9 36r24 40m9 40r24
+. 42r59 44r12 48r15
+13d5 Output{11D10} 35m9 42r108
+15a5 Control_Rods{32|3A10} 20m9 39r42
+16f5 Absorbtion{float} 39m9 40r55
+19i9 i{32|2I10} 20r22
+X 32 types.ads
+1K9*types 15|4w6 15r20 19r15 32|4e10
+2I10*Index<short_short_integer> 15|19r21
+3A10*Rod_Array(float)<2I10> 15|15r26
 

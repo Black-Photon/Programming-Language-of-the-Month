@@ -15,3 +15,4 @@ Thus, the plan is to release a specification of a problem to solve and what lang
 ## Current Month: April
 Create a Nuclear Reactor program in **Ada**
 Read the specification [here](https://black-photon.github.io/language-of-the-month/04-20/)
+You can build the project with `gnatmake main`

@@ -1,14 +1,25 @@
 with Ada.Text_IO;
 with Ada.Numerics.Float_Random; use Ada.Numerics.Float_Random;
+with get_rod_absorption;
+with types;
 
 procedure Main is
+    Choice : Float; -- Random Number Choice (0 to 1)
+    G : Generator;  -- Random Number Generator
+
+
     type Kilojoule is delta 10.0 ** (-4) digits 8;
-    Choice : Float;
-    G : Generator;
     Temperature : Kilojoule := 0.001;
     Output : Kilojoule;
+
+    Control_Rods : types.Rod_Array;
+    Absorbtion : Float;
 begin
     Reset(G);
+    for i in (types.Index) loop
+        Control_Rods(i) := 0.0;
+    end loop;
+
     loop
         Choice := Random(G);
         if Choice <= 0.03 then
@@ -23,6 +34,10 @@ begin
         -- 5% of Temperature dissipates each second
         Output := Temperature * 0.05;
         Temperature := Temperature * 0.95;
+
+        -- Apply control rod modifier
+        Absorbtion := get_rod_absorption(Control_Rods);
+        Temperature := Temperature * Kilojoule (1.0 - Absorbtion);
 
         Ada.Text_IO.Put_Line ("Heat is" & Kilojoule'Image(Temperature) & "KJ, Output of" & Kilojoule'Image(Output) & "KJ/s");
         delay 1.0;
