@@ -2,27 +2,28 @@ V "GNAT Lib v9"
 P ZX
 
 RN
-RV NO_FLOATING_POINT
+RV NO_FIXED_POINT
 RV SPARK_05
 
-U get_rod_absorption%b	get_rod_absorption.adb	bcf1f5d2 NE OO SU IL
+U get_rod_absorption%b	get_rod_absorption.adb	ed4f5fbf NE OO SU IL
 W types%s		types.ads		types.ali
 
-U get_rod_absorption%s	get_rod_absorption.ads	dfe5d28e EE NE OO SU IL
+U get_rod_absorption%s	get_rod_absorption.ads	fa7997e5 EE NE OO SU IL
 W types%s		types.ads		types.ali
 
-D get_rod_absorption.ads  20200427131112 2c2b241f get_rod_absorption%s
-D get_rod_absorption.adb  20200427131608 6314275c get_rod_absorption%b
+D get_rod_absorption.ads  20200427133232 68e3462d get_rod_absorption%s
+D get_rod_absorption.adb  20200427144048 1736c85a get_rod_absorption%b
 D system.ads		20200413210136 32a08138 system%s
-D types.ads		20200427130546 f3cef691 types%s
+D types.ads		20200427144756 929ad1c8 types%s
 X 1 get_rod_absorption.ads
-3V10*get_rod_absorption{float} 3>30 2|3b10 11l5 11t23
-3a30 a{4|3A10} 2|3b30 8r22
+3V10*get_rod_absorption{4|2D10} 3>30 2|3b10 12l5 12t23
+3a30 a{4|4A10} 2|3b30 9r22
 X 2 get_rod_absorption.adb
-4f5 Sum{float} 6m5 8m9 8r16 10r12
-7i9 i{4|2I10} 8r24
+5d5 Sum{4|2D10} 7m5 9m9 9r16 11r12
+8i9 i{4|3I10} 9r24
 X 4 types.ads
-1K9*types 1|1w6 3r34 2|1w6 3r34 7r15 4|4e10
-2I10*Index<short_short_integer> 2|7r21
-3A10*Rod_Array(float)<2I10> 1|3r40 2|3r40
+1K9*types 1|1w6 3r34 3r58 2|1w6 3r34 3r58 4r9 4|6e10
+2D10*Percent 1|3r64 2|3r64 5r11
+3I10*Index<short_short_integer> 2|8r15
+4A10*Rod_Array(2D10)<3I10> 1|3r40 2|3r40
 

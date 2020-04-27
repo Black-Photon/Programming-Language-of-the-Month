@@ -4,6 +4,7 @@ P ZX
 
 RN
 RV NO_DELAY
+RV NO_DIRECT_BOOLEAN_OPERATORS
 RV NO_FIXED_POINT
 RV NO_FLOATING_POINT
 RV NO_IO
@@ -12,13 +13,14 @@ RV NO_DEFAULT_INITIALIZATION
 RV NO_DYNAMIC_SIZED_OBJECTS
 RV SPARK_05
 
-U main%b		main.adb		4a62a471 NE OO SU
+U main%b		main.adb		72702d34 NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 W ada.numerics%s	a-numeri.ads		a-numeri.ali
 W ada.numerics.float_random%s  a-nuflra.adb	a-nuflra.ali
 W ada.text_io%s		a-textio.adb		a-textio.ali
 W get_rod_absorption%s	get_rod_absorption.adb	get_rod_absorption.ali
+W rod_control%s		rod_control.adb		rod_control.ali
 Z system.concat_5%s	s-conca5.adb		s-conca5.ali
 Z system.img_dec%s	s-imgdec.adb		s-imgdec.ali
 W types%s		types.ads		types.ali
@@ -34,10 +36,11 @@ D a-stream.ads		20200413210136 119b8fb3 ada.streams%s
 D a-tags.ads		20200413210136 491b781d ada.tags%s
 D a-textio.ads		20200413210134 881db35a ada.text_io%s
 D a-unccon.ads		20200413210136 0e9b276f ada.unchecked_conversion%s
-D get_rod_absorption.ads  20200427131112 2c2b241f get_rod_absorption%s
+D get_rod_absorption.ads  20200427133232 68e3462d get_rod_absorption%s
 D interfac.ads		20200413210136 5ab55268 interfaces%s
 D i-cstrea.ads		20200413210136 e53d8b8e interfaces.c_streams%s
-D main.adb		20200427132906 5dcc6edf main%b
+D main.adb		20200427145510 f17ceea5 main%b
+D rod_control.ads	20200427145358 b13e4c54 rod_control%s
 D system.ads		20200413210136 32a08138 system%s
 D s-conca5.ads		20200413210136 875e432e system.concat_5%s
 D s-crtl.ads		20200413210136 0ebbdb71 system.crtl%s
@@ -54,35 +57,43 @@ D s-stoele.ads		20200413210136 2dc34a04 system.storage_elements%s
 D s-traent.ads		20200413210136 005bf670 system.traceback_entries%s
 D s-unstyp.ads		20200413210136 34867c83 system.unsigned_types%s
 D s-wchcon.ads		20200413210136 1b7d22d2 system.wch_con%s
-D types.ads		20200427130546 f3cef691 types%s
+D types.ads		20200427144756 929ad1c8 types%s
 X 1 ada.ads
-16K9*Ada 20e8 15|1r6 2r6 2r37 42r9 45r13 46r13 49r13
+16K9*Ada 20e8 15|1r6 2r6 2r37 49r9 52r13 53r13 56r13 58r13 60r17 61r17 65r13
 X 6 a-numeri.ads
 16K13*Numerics 32e17 15|2r10 2r41
 X 7 a-nuflra.ads
 41K22*Float_Random 74e30 15|2w19 2r50
-47R9*Generator<23|63R9> 15|8r9
+47R9*Generator<24|63R9> 15|11r9
 49F12*Uniformly_Distributed{float}
-51V13*Random{49F12}<23|71p13> 15|24s19
-53U14*Reset<23|100p14> 15|18s5
+51V13*Random{49F12}<24|71p13> 15|31s19
+53U14*Reset<24|100p14> 15|22s5
 X 10 a-textio.ads
-49K13*Text_IO 471e16 15|1w10 42r13 45r17 46r17 49r17
-263U14*Put_Line 15|42s21 45s25 46s25 49s25
+49K13*Text_IO 471e16 15|1w10 49r13 52r17 53r17 56r17 58r17 60r21 61r21 65r17
+242U14*Put 15|60s29
+249U14*Get_Line 15|61s29
+263U14*Put_Line 15|49s21 52s25 53s25 56s25 58s25 65s25
 X 12 get_rod_absorption.ads
-3V10*get_rod_absorption{float} 15|3w6 39s23
+3V10*get_rod_absorption{33|2D10} 15|3w6 42s23
 X 15 main.adb
-6U11*Main 6b11 52l5 52t9
-7f5 Choice{float} 24m9 25r12 28r15
-8r5 G{7|47R9} 18r11 24r26
-11D10 Kilojoule 12r19 13r14 40r38 42r43 42r92
-12d5 Temperature{11D10} 27m13 27r28 30m13 30r28 35r19 36m9 36r24 40m9 40r24
-. 42r59 44r12 48r15
-13d5 Output{11D10} 35m9 42r108
-15a5 Control_Rods{32|3A10} 20m9 39r42
-16f5 Absorbtion{float} 39m9 40r55
-19i9 i{32|2I10} 20r22
-X 32 types.ads
-1K9*types 15|4w6 15r20 19r15 32|4e10
-2I10*Index<short_short_integer> 15|19r21
-3A10*Rod_Array(float)<2I10> 15|15r26
+7U11*Main 7b11 69l5 69t9
+10f5 Choice{float} 31m9 32r12 35r15
+11r5 G{7|47R9} 22r11 31r26
+13d5 Temperature{33|5D10} 29r35 34m13 34r28 37m13 37r28 43m9 43r24 46r19
+. 47m9 47r24 49r59 51r12 55r15 57r15 66m13
+14d5 Output{33|5D10} 29r48 46m9 49r108
+16a5 Control_Rods{33|4A10} 24m9 29m21 29r21 42r42
+17d5 Absorption{33|2D10} 42m9 43r55
+19a5 Input{string} 61m39 62r38 62r57 63r27 63r46
+20i5 Last{natural} 61m46
+23i9 i{33|3I10} 24r22
+27l1 Outer_Loop 54r18 62r22 68l14 68e24
+X 16 rod_control.ads
+3U11*rod_control 15|4w6 29s9
+X 33 types.ads
+1K9*types 15|5w6 8r9 33|6e10
+2D10*Percent 15|17r18
+3I10*Index<short_short_integer> 15|23r15
+4A10*Rod_Array(2D10)<3I10> 15|16r20
+5D10*Kilojoule 15|13r19 14r14 43r38 49r43 49r92
 

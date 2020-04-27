@@ -1,0 +1,31 @@
+V "GNAT Lib v9"
+P ZX
+
+RN
+RV NO_FIXED_POINT
+RV SPARK_05
+
+U rod_control%b		rod_control.adb		11897ebf NE OO SU IL
+W types%s		types.ads		types.ali
+
+U rod_control%s		rod_control.ads		23a49d9c EE NE OO SU IL
+W types%s		types.ads		types.ali
+
+D rod_control.ads	20200427145358 b13e4c54 rod_control%s
+D rod_control.adb	20200427145418 322de323 rod_control%b
+D system.ads		20200413210136 32a08138 system%s
+D types.ads		20200427144756 929ad1c8 types%s
+X 1 rod_control.ads
+3U11*rod_control 3=24 3>63 3>94 2|3b11 11l5 11t16
+3a24 Control_Rods{4|4A10} 2|3b24 8m13
+3d63 Temperature{4|5D10} 2|3b63 6r8
+3d94 Output{4|5D10} 2|3b94
+X 2 rod_control.adb
+7i13 i{4|3I10} 8r26
+X 4 types.ads
+1K9*types 1|1w6 3r46 3r77 3r103 2|1w6 3r46 3r77 3r103 4r9 4|6e10
+2D10*Percent
+3I10*Index<short_short_integer> 2|7r19
+4A10*Rod_Array(2D10)<3I10> 1|3r52 2|3r52
+5D10*Kilojoule 1|3r83 3r109 2|3r83 3r109
+
