@@ -11,7 +11,8 @@ procedure Main is
     Choice : Float; -- Random Number Choice (0 to 1)
     G : Generator;  -- Random Number Generator
 
-    Temperature : Kilojoule := 0.001;
+    Temp_Potential : Kilojoule := 0.001;    -- Temperature potential is the total neutron energy in the system
+    Temperature : Kilojoule := 0.000;       -- Temperature is the absolute energy in the system (not inc neutrons)
     Output : Kilojoule := 0.0;
 
     Control_Rods : Rod_Array;
@@ -28,14 +29,16 @@ procedure Main is
     task body Sig_Handler is
     begin
         Handler.Wait;
-        Sigint := True;
-        Ada.Text_IO.Put_Line("Exit Control Signal Received. Shutting down reactor...");
-        for i in (Index) loop
-            Control_Rods(i) := 1.0;
-        end loop;
-        while Temperature > 0.0 loop null; end loop;
-        Ada.Text_IO.Put_Line("Shutdown Success!");
-        Term := True;
+        if not Term then
+            Sigint := True;
+            Ada.Text_IO.Put_Line("Exit Control Signal Received. Shutting down reactor...");
+            for i in (Index) loop
+                Control_Rods(i) := 1.0;
+            end loop;
+            while Temperature > 0.0 and not Term loop null; end loop;
+            Ada.Text_IO.Put_Line("Shutdown Success");
+            Term := True;
+        end if;
     end Sig_Handler;
 begin
     Reset(G);
@@ -45,21 +48,27 @@ begin
 
 Outer_Loop:
     while not Term loop
-        rod_control(Control_Rods, Temperature, Output);
+        -- Ignore AI input for manual shutdown
+        if not Sigint then
+            rod_control(Control_Rods, Temperature, Output);
+        end if;
 
         Choice := Random(G);
         if Choice <= 0.03 then
-            -- Temperature quadruples this second
-            Temperature := Temperature * 4;
+            -- Temperature potential quadruples this second
+            Temp_Potential := Temp_Potential * 4;
         elsif Choice < 0.97 then 
-            -- Temperature doubles each second
-            Temperature := Temperature * 2;
+            -- Temperature potential doubles each second
+            Temp_Potential := Temp_Potential * 2;
         end if;
         -- Otherwise Temperature doesn't change
 
         -- Apply control rod modifier
         Absorption := get_rod_absorption(Control_Rods);
-        Temperature := Temperature * Kilojoule (1.0 - Absorption);
+        Temp_Potential := Temp_Potential * Kilojoule (1.0 - Absorption);
+
+        -- Apply Temperature Potential to Temperature
+        Temperature := Temperature + Temp_Potential;
 
         -- 5% of Temperature dissipates each second
         Output := Temperature * 0.05;
@@ -82,7 +91,8 @@ Outer_Loop:
                 exit when Input (1) = 'Y' or Input (1) = 'y';
             end loop;
             Ada.Text_IO.Put_Line ("");
-            Temperature := 0.001;
+            Temp_Potential := 0.001;
         end if;
     end loop Outer_Loop;
+    Term := True;
 end Main;
