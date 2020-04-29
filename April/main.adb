@@ -3,6 +3,7 @@ with Ada.Numerics.Float_Random; use Ada.Numerics.Float_Random;
 with get_rod_absorption;
 with rod_control;
 with types;
+with signal; use signal;
 
 procedure Main is
     use types;
@@ -18,6 +19,24 @@ procedure Main is
 
     Input  : String (1 .. 10);
     Last : Natural;
+
+
+    Sigint : Boolean := False;
+    Term : Boolean := False;
+
+    task Sig_Handler;
+    task body Sig_Handler is
+    begin
+        Handler.Wait;
+        Sigint := True;
+        Ada.Text_IO.Put_Line("Exit Control Signal Received. Shutting down reactor...");
+        for i in (Index) loop
+            Control_Rods(i) := 1.0;
+        end loop;
+        while Temperature > 0.0 loop null; end loop;
+        Ada.Text_IO.Put_Line("Shutdown Success!");
+        Term := True;
+    end Sig_Handler;
 begin
     Reset(G);
     for i in (Index) loop
@@ -25,7 +44,7 @@ begin
     end loop;
 
 Outer_Loop:
-    loop
+    while not Term loop
         rod_control(Control_Rods, Temperature, Output);
 
         Choice := Random(G);
@@ -54,7 +73,7 @@ Outer_Loop:
             exit Outer_Loop;
         elsif Temperature >= 500.000 then
             Ada.Text_IO.Put_Line ("Warning: Heat is above safety limit of 500KJ.");
-        elsif Temperature = 0.000 then
+        elsif Temperature = 0.000 and not Sigint then
             Ada.Text_IO.Put_Line ("Warning: Reactor heat is at 0KJ");
             loop
                 Ada.Text_IO.Put ("         Would you like to resart? (Y/N) ");
