@@ -1,7 +1,7 @@
 with Ada.Text_IO;
 with Ada.Numerics.Float_Random; use Ada.Numerics.Float_Random;
 with get_rod_absorption;
-with rod_control;
+with rod_control; use rod_control;
 with types;
 with signal; use signal;
 
@@ -50,7 +50,7 @@ Outer_Loop:
     while not Term loop
         -- Ignore AI input for manual shutdown
         if not Sigint then
-            rod_control(Control_Rods, Temperature, Output);
+            callback(Control_Rods, Temperature, Output);
         end if;
 
         Choice := Random(G);

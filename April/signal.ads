@@ -2,7 +2,7 @@ with Ada.Interrupts; use Ada.Interrupts;
 with Ada.Interrupts.Names; use Ada.Interrupts.Names;
  
 package signal is
-    protected Handler is
+   protected Handler is
       entry Wait;
       procedure Handle;
       pragma Interrupt_Handler(Handle);

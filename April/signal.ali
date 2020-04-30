@@ -48,8 +48,8 @@ D a-unccon.ads		20200413210136 0e9b276f ada.unchecked_conversion%s
 D interfac.ads		20200413210136 5ab55268 interfaces%s
 D i-c.ads		20200413210136 5421119b interfaces.c%s
 D i-cstrin.ads		20200413210136 341d0ddf interfaces.c.strings%s
-D signal.ads		20200429210516 26562a5e signal%s
-D signal.adb		20200429210512 28a38058 signal%b
+D signal.ads		20200430154134 26562a5e signal%s
+D signal.adb		20200429214340 28a38058 signal%b
 D system.ads		20200413210136 32a08138 system%s
 D s-atacco.ads		20200413210136 4c36d12f system.address_to_access_conversions%s
 D s-exctab.ads		20200413210136 54135002 system.exception_table%s
@@ -85,7 +85,7 @@ X 5 a-intnam.ads
 49i4*SIGINT{4|42I9} 13|9r37
 X 13 signal.ads
 4K9*signal 14l5 14e11 14|1b14 15l5 15t11
-5w15*Handler 14|2b19 13l8 13t15
+5w14*Handler 14|2b19 13l8 13t15
 6Y13 Wait 14|3b13 6l11 6t15
 7U17 Handle 8r32 9r29 14|8b17 11l11 11t17
 11i7 Call_Count{natural} 14|3r23 5r10 5r24 10r10 10r24

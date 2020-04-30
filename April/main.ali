@@ -18,7 +18,7 @@ RV SPARK_05
 RV MAX_TASKS=1+
 RV MAX_ENTRY_QUEUE_LENGTH=1+
 
-U main%b		main.adb		f71b5ee2 NE OO SU
+U main%b		main.adb		e763de0e NE OO SU
 W ada%s			ada.ads			ada.ali
 Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
 W ada.numerics%s	a-numeri.ads		a-numeri.ali
@@ -62,9 +62,9 @@ D interfac.ads		20200413210136 5ab55268 interfaces%s
 D i-c.ads		20200413210136 5421119b interfaces.c%s
 D i-cstrin.ads		20200413210136 341d0ddf interfaces.c.strings%s
 D i-cstrea.ads		20200413210136 e53d8b8e interfaces.c_streams%s
-D main.adb		20200429213402 5241b72d main%b
-D rod_control.ads	20200427145358 b13e4c54 rod_control%s
-D signal.ads		20200429210516 26562a5e signal%s
+D main.adb		20200430155942 72c90b00 main%b
+D rod_control.ads	20200430155106 81ce7095 rod_control%s
+D signal.ads		20200430154134 26562a5e signal%s
 D system.ads		20200413210136 32a08138 system%s
 D s-atacco.ads		20200413210136 4c36d12f system.address_to_access_conversions%s
 D s-conca5.ads		20200413210136 875e432e system.concat_5%s
@@ -121,10 +121,10 @@ X 22 main.adb
 11f5 Choice{float} 56m9 57r12 60r15
 12r5 G{10|47R9} 44r11 56r26
 14d5 Temp_Potential{56|5D10} 59m13 59r31 62m13 62r31 68m9 68r27 71r38 94m13
-15d5 Temperature{56|5D10} 38r19 53r39 71m9 71r24 74r19 75m9 75r24 77r59 79r12
+15d5 Temperature{56|5D10} 38r19 53r36 71m9 71r24 74r19 75m9 75r24 77r59 79r12
 . 83r15 85r15
-16d5 Output{56|5D10} 53r52 74m9 77r108
-18a5 Control_Rods{56|4A10} 36m17 46m9 53m25 53r25 67r42
+16d5 Output{56|5D10} 53r49 74m9 77r108
+18a5 Control_Rods{56|4A10} 36m17 46m9 53m22 53r22 67r42
 19d5 Absorption{56|2D10} 67m9 68r61
 21a5 Input{string} 89m39 90r38 90r57 91r27 91r46
 22i5 Last{natural} 89m46
@@ -135,10 +135,11 @@ X 22 main.adb
 45i9 i{56|3I10} 46r22
 49l1 Outer_Loop 82r18 90r22 96l14 96e24
 X 23 rod_control.ads
-3U11*rod_control 22|4w6 53s13
+3K9*rod_control 22|4w6 4r23 23|7e16
+4U15*callback 22|53s13
 X 24 signal.ads
 4K9*signal 22|6w6 6r18 24|14e11
-5w15*Handler 22|31r9
+5w14*Handler 22|31r9
 6Y13 Wait 22|31s17
 X 41 s-stausa.ads
 203U14*Initialize 204i<c,__gnat_stack_usage_initialize>22
