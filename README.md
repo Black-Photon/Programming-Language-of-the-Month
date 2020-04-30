@@ -13,6 +13,7 @@ Generally, learning a new programming language takes no time at all. But what's 
 Thus, the plan is to release a specification of a problem to solve and what language I plan to use at the start of the month. At the end of the month I'll show off my solution as well as how it works and what I've learned on my blog at https://black-photon.github.io/
 
 ## Current Month: April
+#### COMPLETE
 Create a Nuclear Reactor program in **Ada**
-Read the specification [here](https://black-photon.github.io/language-of-the-month/04-20/)
+Read the specification and final notes [here](https://black-photon.github.io/language-of-the-month/04-20/)
 You can build the project with `gnatmake main`
