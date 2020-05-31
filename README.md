@@ -19,6 +19,7 @@ Read the specification and final notes [here](https://black-photon.github.io/lan
 You can build the project with `gnatmake main`
 
 ## Current Month: May
+#### COMPLETE
 Investigate the secret of **Lisp**, comparing it to Python, Haskell and C
 Read the specification [here](https://black-photon.github.io/language-of-the-month/05-20/)
 You can build any of the files with `clisp <file>`
