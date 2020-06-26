@@ -18,8 +18,13 @@ Create a Nuclear Reactor program in **Ada**
 Read the specification and final notes [here](https://black-photon.github.io/language-of-the-month/04-20/)
 You can build the project with `gnatmake main`
 
-## Current Month: May
+## May
 #### COMPLETE
 Investigate the secret of **Lisp**, comparing it to Python, Haskell and C
-Read the specification [here](https://black-photon.github.io/language-of-the-month/05-20/)
+Read the specification and final notes [here](https://black-photon.github.io/language-of-the-month/05-20/)
 You can build any of the files with `clisp <file>`
+
+## Current Month: June
+How difficult is it really to make an OpenGL application in Rust?
+Read the specification [here](https://black-photon.github.io/language-of-the-month/06-20/)
+You can build and run the project with `cargo run --package graphics --bin graphics` from the `graphics` directory
