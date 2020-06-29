@@ -21,9 +21,16 @@ fn main() {
     let display = glium::Display::new(wb, cb, &event_loop).unwrap();
     let (vertex_buffer, indices, program) = prepare(&display);
 
-    event_loop.run(move |ev, _, control_flow| {
+    let start = std::time::Instant::now();
+    let mut current = start;
 
-        main_loop(&display, &vertex_buffer, IndicesSource::from(&indices), &program);
+    event_loop.run(move |ev, _, control_flow| {
+        let now = std::time::Instant::now();
+        let delta_t = now.duration_since(current);
+        let abs_t = now.duration_since(start);
+        current = now;
+
+        main_loop(&display, &vertex_buffer, IndicesSource::from(&indices), &program, delta_t.as_secs_f32(), abs_t.as_secs_f32());
 
         let next_frame_time = std::time::Instant::now() +
             std::time::Duration::from_nanos(16_666_667);
@@ -66,18 +73,18 @@ fn prepare(display: &glium::Display) -> (glium::VertexBuffer<Vertex>, glium::Ind
         Vertex { position: [-1.0, 1.0, -1.0] }
     ];
     let indices = vec![
-        0, 1, 2,
-        0, 2, 3,
-        4, 5, 1,
-        4, 1, 0,
-        3, 2, 6,
-        3, 6, 7,
-        7, 5, 4,
-        7, 6, 5,
-        0, 3, 4,
-        3, 7, 4,
-        1, 5, 2,
-        5, 6, 2
+        0, 2, 1,
+        0, 3, 2,
+        4, 1, 5,
+        4, 0, 1,
+        3, 6, 2,
+        3, 7, 6,
+        7, 4, 5,
+        7, 5, 6,
+        0, 4, 3,
+        3, 4, 7,
+        1, 2, 5,
+        5, 2, 6
     ];
 
     let vertex_buffer = glium::VertexBuffer::new(display, &shape).unwrap();
@@ -92,58 +99,32 @@ fn prepare(display: &glium::Display) -> (glium::VertexBuffer<Vertex>, glium::Ind
     return (vertex_buffer, indices, program);
 }
 
-fn main_loop(display: &glium::Display, vertex_buffer: &glium::VertexBuffer<Vertex>, indices: IndicesSource, program: &glium::Program) {
+fn main_loop(display: &glium::Display, vertex_buffer: &glium::VertexBuffer<Vertex>, indices: IndicesSource, program: &glium::Program, delta_t: f32, abs_t: f32) {
     let mut target = display.draw();
     target.clear_color(0.0, 0.0, 1.0, 1.0);
 
-    let model = [
-        [1.0, 0.0, 0.0, 0.0],
-        [0.0, 1.0, 0.0, 0.0],
-        [0.0, 0.0, 1.0, 0.0],
-        [0.0, 0.0, 0.0, 1.0f32]
-    ];
-    let view = unsafe {
-        let cam_pos = [0.0, 0.0, 3.0];
+    let model = {
+        let mut time = abs_t * 10.0;
+        while time > 360.0 {
+            time -= 360.0;
+        }
+        invert_mat4(rotate([
+            [1.0, 0.0, 0.0, 0.0],
+            [0.0, 1.0, 0.0, 0.0],
+            [0.0, 0.0, 1.0, 0.0],
+            [0.0, 0.0, 0.0, 1.0f32]
+        ], time, time, time))
+    };
+    let view = invert_mat4({
+        let cam_pos = [0.0, 0.0, 8.0];
         let cam_target = [0.0, 0.0, 0.0];
         let abs_up = [0.0, 1.0, 0.0];
 
         look_at(cam_pos, cam_target, abs_up)
-    };
-    let projection = {
-        perspective(90.0, 1920.0/1080.0, 1.0, 5.0)
-    };
-
-    unsafe {
-        print_sequence([1.0, 1.0, 1.0, 1.0], model, view, projection);
-        println!();
-        print_sequence([1.0, -1.0, 1.0, 1.0], model, view, projection);
-        println!();
-        print_sequence([-1.0, 1.0, 1.0, 1.0], model, view, projection);
-        println!();
-        print_sequence([-1.0, -1.0, 1.0, 1.0], model, view, projection);
-        println!();
-        print_sequence([1.0, 1.0, -1.0, 1.0], model, view, projection);
-        println!();
-        print_sequence([1.0, -1.0, -1.0, 1.0], model, view, projection);
-        println!();
-        print_sequence([-1.0, 1.0, -1.0, 1.0], model, view, projection);
-        println!();
-        print_sequence([-1.0, -1.0, -1.0, 1.0], model, view, projection);
-        println!();
-        println!();
-        println!();
-        println!();
-        println!();
-        println!();
-        println!();
-        println!();
-        println!();
-        println!();
-        println!();
-        println!();
-        println!();
-    }
-
+    });
+    let projection = invert_mat4({
+        perspective(90.0, 1920.0/1080.0, 1.0, 10.0)
+    });
     target.draw(vertex_buffer, indices, program, &uniform! { model: model, view: view, projection: projection },
                 &Default::default()).unwrap();
     target.finish().unwrap();
@@ -263,4 +244,36 @@ fn perspective(fov: f32, aspect: f32, near: f32, far: f32) -> [[f32; 4]; 4] {
         [0.0,           0.0,            -(f+n)/(f-n),   -2.0*f*n/(f-n)  ],
         [0.0,           0.0,            -1.0,           0.0f32          ]
     ];
+}
+
+fn invert_mat4(mat: [[f32; 4]; 4]) -> [[f32; 4]; 4] {
+    return [
+        [mat[0][0], mat[1][0], mat[2][0], mat[3][0]],
+        [mat[0][1], mat[1][1], mat[2][1], mat[3][1]],
+        [mat[0][2], mat[1][2], mat[2][2], mat[3][2]],
+        [mat[0][3], mat[1][3], mat[2][3], mat[3][3]]
+    ];
+}
+
+fn rotate(mat: [[f32; 4]; 4], pitch: f32, roll: f32, head: f32) -> [[f32; 4]; 4] {
+    let p = pitch * 2.0 * PI/360.0;
+    let r = roll * 2.0 * PI/360.0;
+    let h = head * 2.0 * PI/360.0;
+
+    let sp = p.sin();
+    let sr = r.sin();
+    let sh = h.sin();
+
+    let cp = p.cos();
+    let cr = r.cos();
+    let ch = h.cos();
+
+    let rotate = [
+        [(cr * ch) - (sr * sp * sh),    -sr * cp,   (cr * sh) + (sr * sp * ch), 0.0],
+        [(sr * ch) + (cr * sp * sh),    cr * cp,    (sr * sh) - (cr * sp * ch), 0.0],
+        [-cp * sh,                      sp,         cp * ch,                    0.0],
+        [0.0,                           0.0,        0.0,                        1.0]
+    ];
+
+    return mat4_mult_f32(rotate, mat);
 }
