@@ -10,6 +10,7 @@ use std::f32::consts::PI;
 #[derive(Copy, Clone)]
 struct Vertex {
     position: [f32; 3],
+    normal: [f32; 3],
 }
 
 fn main() {
@@ -60,31 +61,57 @@ fn setup_window
 }
 
 fn prepare(display: &glium::Display) -> (glium::VertexBuffer<Vertex>, glium::IndexBuffer<u16>, glium::Program) {
-    implement_vertex!(Vertex, position);
+    implement_vertex!(Vertex, position, normal);
 
     let shape = vec![
-        Vertex { position: [1.0, 1.0, 1.0] },
-        Vertex { position: [1.0, -1.0, 1.0] },
-        Vertex { position: [-1.0, -1.0, 1.0] },
-        Vertex { position: [-1.0, 1.0, 1.0] },
-        Vertex { position: [1.0, 1.0, -1.0] },
-        Vertex { position: [1.0, -1.0, -1.0] },
-        Vertex { position: [-1.0, -1.0, -1.0] },
-        Vertex { position: [-1.0, 1.0, -1.0] }
+        Vertex { position: [1.0, 1.0, 1.0], normal: [0.0, 0.0, 1.0] }, // 0
+        Vertex { position: [1.0, -1.0, 1.0], normal: [0.0, 0.0, 1.0] }, // 1
+        Vertex { position: [-1.0, -1.0, 1.0], normal: [0.0, 0.0, 1.0] }, // 2
+        Vertex { position: [-1.0, 1.0, 1.0], normal: [0.0, 0.0, 1.0] }, // 3
+
+        Vertex { position: [1.0, 1.0, 1.0], normal: [1.0, 0.0, 0.0] }, // 0
+        Vertex { position: [1.0, -1.0, 1.0], normal: [1.0, 0.0, 0.0] }, // 1
+        Vertex { position: [1.0, 1.0, -1.0], normal: [1.0, 0.0, 0.0] }, // 4
+        Vertex { position: [1.0, -1.0, -1.0], normal: [1.0, 0.0, 0.0] }, // 5
+
+        Vertex { position: [-1.0, -1.0, 1.0], normal: [-1.0, 0.0, 0.0] }, // 2
+        Vertex { position: [-1.0, 1.0, 1.0], normal: [-1.0, 0.0, 0.0] }, // 3
+        Vertex { position: [-1.0, -1.0, -1.0], normal: [-1.0, 0.0, 0.0] }, // 6
+        Vertex { position: [-1.0, 1.0, -1.0], normal: [-1.0, 0.0, 0.0] }, // 7
+
+        Vertex { position: [1.0, 1.0, -1.0], normal: [0.0, 0.0, -1.0] }, // 4
+        Vertex { position: [1.0, -1.0, -1.0], normal: [0.0, 0.0, -1.0] }, // 5
+        Vertex { position: [-1.0, -1.0, -1.0], normal: [0.0, 0.0, -1.0] }, // 6
+        Vertex { position: [-1.0, 1.0, -1.0], normal: [0.0, 0.0, -1.0] }, // 7
+
+        Vertex { position: [1.0, 1.0, 1.0], normal: [0.0, 1.0, 0.0] }, // 0
+        Vertex { position: [-1.0, 1.0, 1.0], normal: [0.0, 1.0, 0.0] }, // 3
+        Vertex { position: [1.0, 1.0, -1.0], normal: [0.0, 1.0, 0.0] }, // 4
+        Vertex { position: [-1.0, 1.0, -1.0], normal: [0.0, 1.0, 0.0] }, // 7
+
+        Vertex { position: [1.0, -1.0, 1.0], normal: [0.0, -1.0, 0.0] }, // 1
+        Vertex { position: [-1.0, -1.0, 1.0], normal: [0.0, -1.0, 0.0] }, // 2
+        Vertex { position: [1.0, -1.0, -1.0], normal: [0.0, -1.0, 0.0] }, // 5
+        Vertex { position: [-1.0, -1.0, -1.0], normal: [0.0, -1.0, 0.0] }, // 6
     ];
     let indices = vec![
-        0, 2, 1,
-        0, 3, 2,
-        4, 1, 5,
-        4, 0, 1,
-        3, 6, 2,
-        3, 7, 6,
-        7, 4, 5,
-        7, 5, 6,
-        0, 4, 3,
-        3, 4, 7,
-        1, 2, 5,
-        5, 2, 6
+        0, 1, 2,
+        0, 2, 3,
+
+        4, 5, 6,
+        5, 6, 7,
+
+        8, 9, 10,
+        9, 10, 11,
+
+        12, 13, 14,
+        12, 14, 15,
+
+        16, 17, 18,
+        17, 18, 19,
+
+        20, 21, 22,
+        21, 22, 23
     ];
 
     let vertex_buffer = glium::VertexBuffer::new(display, &shape).unwrap();
@@ -101,7 +128,7 @@ fn prepare(display: &glium::Display) -> (glium::VertexBuffer<Vertex>, glium::Ind
 
 fn main_loop(display: &glium::Display, vertex_buffer: &glium::VertexBuffer<Vertex>, indices: IndicesSource, program: &glium::Program, delta_t: f32, abs_t: f32) {
     let mut target = display.draw();
-    target.clear_color(0.0, 0.0, 1.0, 1.0);
+    target.clear_color_and_depth((0.0, 0.0, 0.0, 1.0), 1.0);
 
     let model = {
         let mut time = abs_t * 10.0;
@@ -125,8 +152,23 @@ fn main_loop(display: &glium::Display, vertex_buffer: &glium::VertexBuffer<Verte
     let projection = invert_mat4({
         perspective(90.0, 1920.0/1080.0, 1.0, 10.0)
     });
-    target.draw(vertex_buffer, indices, program, &uniform! { model: model, view: view, projection: projection },
-                &Default::default()).unwrap();
+    let uniforms = uniform!{
+        model: model,
+        view: view,
+        projection: projection,
+        light: [3.0, 3.0, 3.0f32]
+    };
+
+    let params = glium::DrawParameters {
+        depth: glium::Depth {
+            test: glium::draw_parameters::DepthTest::IfLess,
+            write: true,
+            .. Default::default()
+        },
+        .. Default::default()
+    };
+
+    target.draw(vertex_buffer, indices, program, &uniforms, &params).unwrap();
     target.finish().unwrap();
 }
 
