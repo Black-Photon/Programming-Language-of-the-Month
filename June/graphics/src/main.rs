@@ -152,11 +152,16 @@ fn main_loop(display: &glium::Display, vertex_buffer: &glium::VertexBuffer<Verte
     let projection = invert_mat4({
         perspective(90.0, 1920.0/1080.0, 1.0, 10.0)
     });
+    #[derive(Copy, Clone)]
+    struct Camera {
+        position: [f32; 3]
+    }
     let uniforms = uniform!{
         model: model,
         view: view,
         projection: projection,
-        light: [3.0, 3.0, 3.0f32]
+        light: [3.0, 3.0, 3.0f32],
+        camera: [0.0, 0.0, 8.0f32]
     };
 
     let params = glium::DrawParameters {
